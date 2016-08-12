@@ -1,0 +1,49 @@
+What is the role of JDBC driver in a Sqoop set up?
+Is JDBC driver enough to connect sqoop to the databases?
+When to use --target-dir and when to use --warehouse-dir while importing data?
+How can you import only a subset of rows form a table?
+How can we import a subset of rows from a table without using the where clause?
+What is the advantage of using --password-file rather than -P option while preventing the display of password in the sqoop import statement?
+What is the default extension of the files produced from a sqoop import using the --compress parameter ?
+What is the significance of using --compress-codec parameter?
+What is a disadvantage of using --direct parameter for faster data load by sqoop?
+How can you control the number of mappers used by the sqoop command?
+How can you avoid importing tables one-by-one when importing a large number of tables from a database ?
+When the source data keeps getting updated frequently, what is the approach to keep it in sync with the data in HDFS imported by sqoop?
+What is the usefulness of the options file in sqoop.
+Is it possible to add a parameter while running a saved job?
+How do you fetch data which is the result of join between two tables?
+How can we slice the data to be imported to multiple parallel tasks?
+How can you choose a name for the mapreduce job which is created on submitting a free-form query import ?
+Before starting the data transfer using mapreduce job, sqoop takes a long time to retrieve the minimum and maximum values of columns mentioned in –split-by parameter. How can we make it
+efficient ?
+What is the difference between the parameters sqoop.export.records.per.statement and sqoop.export.statements.per.transaction ?
+How will you implement all-or-nothing load using sqoop?
+How do you clear the data in a staging table before loading it by Sqoop?
+How will you update the rows that are already exported?
+How can you sync a exported table with HDFS data in which some rows are deleted?
+How can you export only a subset of columns to a relational table using sqoop?
+How can we load to a column in a relational table which is not null but the incoming value from HDFS has a null value?
+How can you schedule a sqoop job using Oozie?
+Give a sqoop command to show all the databases in a MySql server.
+What do you mean by Free Form Import in Sqoop?
+How can you force sqoop to execute a free form Sql query only once and import the rows serially.
+In a sqoop import command you have mentioned to run 8 parallel Mapreduce task but sqoop runs only 4. What can be the reason?
+What is the importance of --split-by clause in running parallel import tasks in sqoop?
+What happens when a table is imported into a HDFS directory which already exists using the –apend parameter?
+How can you control the mapping between SQL data types and Java types?
+How to import only the updated rows form a table into HDFS using sqoop assuming the source has last update timestamp details for each row?
+What are the two file formats supported by sqoop for import?
+Give a sqoop command to import the columns employee_id,first_name,last_name from the MySql table Employee
+Give a sqoop command to run only 8 mapreduce tasks in parallel
+Give a Sqoop command to import all the records from employee table divided into groups of records by the values in the column department_id.
+Give a sqoop command to import data from all tables in the MySql DB DB1.
+Give a command to execute a stored procedure named proc1 which exports data to from MySQL db named DB1 into a HDFS directory named Dir1.
+What is a sqoop metastore?
+What is the purpose of sqoop-merge?
+How can you see the list of stored jobs in sqoop metastore?
+Give the sqoop command to see the content of the job named myjob?
+Which database the sqoop metastore runs on?
+Where can the metastore database be hosted?
+
+
