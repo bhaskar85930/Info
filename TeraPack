@@ -1,0 +1,15 @@
+Teragen
+
+yarn jar /opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.0-
+
+mapr-1607.jar teragen -Dmapreduce.job.maps=10 -Dmapreduce.job.reduces=6 5000000 
+
+/axp/hadparchs/teragen_input5
+
+Terasort
+
+yarn jar /opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.0-
+
+mapr-1607.jar terasort -Dmapreduce.job.maps=10 -Dmapreduce.job.reduces=6 
+
+/axp/hadparchs/teragen_input5 /axp/hadparchs/terasort_input5
