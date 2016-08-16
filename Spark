@@ -3,3 +3,16 @@ Spark- avro
 http://www.bigdatatidbits.cc/2015/01/how-to-load-some-avro-data-into-spark.html
 
 http://apachesparknotes.blogspot.com/2015/05/loading-avro-in-scala-spark-creating.html
+
+Spark- parquet
+
+https://community.hortonworks.com/articles/21303/write-read-parquet-file-in-spark.html
+
+https://developer.ibm.com/hadoop/2015/12/03/parquet-for-spark-sql/
+
+Example : https://github.com/rcongiu/spark-nested-example
+
+
+Spark- ORC
+
+http://hortonworks.com/hadoop-tutorial/using-hive-with-orc-from-apache-spark/
