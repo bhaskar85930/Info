@@ -1,0 +1,8 @@
+Storm - hive integration
+
+check git hub
+
+http://hortonworks.com/hadoop-tutorial/realtime-event-processing-nifi-kafka-storm/#section_4
+
+https://www.codatlas.com/github.com/apache/storm/master/external/storm-hive/src/test/java/org/apache/storm/hive/trident/TridentHiveTopology.java
+
