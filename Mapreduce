@@ -57,6 +57,10 @@ http://stackoverflow.com/questions/25432598/what-is-the-mapper-of-reducer-setup-
 -> 10 Useful Tips : http://blog.cloudera.com/blog/2009/05/10-mapreduce-tips/
 -> How to process large number of small files in mapreduce. : http://blog.cloudera.com/blog/2009/02/the-small-files-problem/
 -> What is Custom Record reader and usecase.
+-> What is Rack Awareness
+-> What is replica replacement Policy
+->What happens when 2 clients try to access the same file.
+-> 
 
 
 
