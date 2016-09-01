@@ -30,3 +30,78 @@ Example : https://github.com/rcongiu/spark-nested-example
 Spark- ORC
 
 http://hortonworks.com/hadoop-tutorial/using-hive-with-orc-from-apache-spark/
+
+
+create Sprak application
+What are the hadoop configuration files mandatory for spark application to run
+what is Spark
+Important elements in spark
+How spark works
+what is spark engine in spark
+functions of spark core
+what is spark driver, spark context, RDD lineage
+What is Accumulator
+what is spark executor
+advantages of spark over mapreduce
+what is Dstream how it is different form dataFrames.
+In which mode does industry is using spark now
+How to configure executors and workers for spark node
+what is dataframe
+what is the advantage of dataframe over RDD
+what is RDD
+what is pair RDD
+what is schema RDD how it is different form Dataframes or both are same.
+How spark partion the data.
+Is hadoop mandatory to use spark
+difference between persit() and cache()
+How spark uses Akka
+Hadoop uses replication to achieve fault tolerance. How is this achieved in Apache Spark
+List all Transformations and Actions in Spark
+In which version does dataframes were introduced.
+Explain your spark application
+what is sparkpy, spark-summit
+what are the main functions of scala used in spark
+Limitations of Spark
+What is Partitioning, how to limit partitoning in spark
+what is the port number for spark UI 
+What we can observe mainly in Spark UI
+How to kill the job in Spark.
+what are the new features in Spark 2.0
+What is dataset
+diff b/w RDD, Dataframes and dataset
+Different datatypes supported by sparksql and dataframes.
+How to convert existing RDD into DataFrames
+How to convert Dataframes into RDD's
+What is broadcast variable, how to set broadcast variables.
+Why is scala best suitable for spark development.
+How to submit the spark jar/job file to the cluster
+what is the scala version your are using in your project
+what is spark-core and which version you are using in the current project
+What is spark context
+what is sparkql
+how to access HIVE from spark.
+can we update Hive data from spark.
+How to work on different fileformats in spark
+ a. Textfile format
+ b. Sequence File format
+ c. JSON file format
+ d. CSV file format
+ e. XML file format
+ f. ORC file format
+ g. Parquet File format
+ h. AVRO file format
+ 
+ How to integrate spark with Kafka
+ How to integrate Spark with Hbase or Cassandra
+ How can you specify the schema programatically in dataframes.
+ How to use UDF's in Spark
+ How to register UDF's in spark
+ How to use all HIVE functionalities in Spark like bucketing, partitoing, indexing from Spark.
+
+
+Please Refer : http://spark.apache.org/docs/latest/sql-programming-guide.html
+
+ 
+
+
+
