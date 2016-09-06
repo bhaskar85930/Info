@@ -31,10 +31,11 @@ Spark- ORC
 
 http://hortonworks.com/hadoop-tutorial/using-hive-with-orc-from-apache-spark/
 
-
+List all import methods used for Spark
 create Sprak application
 What are the hadoop configuration files mandatory for spark application to run
 what is Spark
+Explain how spark works in YARN mode.
 Important elements in spark
 How spark works
 what is spark engine in spark
@@ -48,6 +49,16 @@ In which mode does industry is using spark now
 How to configure executors and workers for spark node
 what is dataframe
 what is the advantage of dataframe over RDD
+Do you have connectors for cassandra
+what is spark streaming.
+what is spark-shell, pyspark shell, spark-sql  and  sparkR shell.
+what is spark-streaming
+what is sliding interval and window time in spark-streaming.
+
+how RDD works internally
+Ans : http://stackoverflow.com/questions/30691385/internal-work-of-spark
+scala and java differences
+
 what is RDD
 what is pair RDD
 what is schema RDD how it is different form Dataframes or both are same.
@@ -97,11 +108,15 @@ How to work on different fileformats in spark
  How to use UDF's in Spark
  How to register UDF's in spark
  How to use all HIVE functionalities in Spark like bucketing, partitoing, indexing from Spark.
+ common errors while running spark application.
+ difference between reducebykey and groupbykey
+ https://databricks.gitbooks.io/databricks-spark-knowledge-base/content/best_practices/prefer_reducebykey_over_groupbykey.html
 
 
 Please Refer : http://spark.apache.org/docs/latest/sql-programming-guide.html
 
  
-
+Refer : https://jaceklaskowski.gitbooks.io/mastering-apache-spark/content/spark-rdd-partitions.html
+https://www.cloudera.com/documentation/enterprise/5-6-x/topics/spark_develop_run.html
 
 
