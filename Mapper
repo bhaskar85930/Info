@@ -1,0 +1,74 @@
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.KeyValue;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hive.hcatalog.data.HCatRecord;
+
+public class HbaseBulkLoadMapper extends Mapper<WritableComparable, HCatRecord, ImmutableBytesWritable, KeyValue> {
+    private String hbaseTable;	
+    private String dataSeperator;
+    private String columnFamily1;
+    private String columnFamily2;
+    private ImmutableBytesWritable hbaseTableName;
+    private int counter =0;
+	
+	final static byte[] DATA_COL_FAM = "cf1".getBytes();
+	ImmutableBytesWritable hKey = new ImmutableBytesWritable();
+	KeyValue kv;
+
+    public void setup(Context context) {
+        Configuration configuration = context.getConfiguration();		
+        hbaseTable = configuration.get("hbase.table.name");		
+        //dataSeperator = configuration.get("data.seperator");		
+        //columnFamily1 = configuration.get("COLUMN_FAMILY_1");		
+        //columnFamily2 = configuration.get("COLUMN_FAMILY_2");		
+        hbaseTableName = new ImmutableBytesWritable(Bytes.toBytes(hbaseTable));		
+    }
+
+	
+	public void map(WritableComparable key, HCatRecord value, Context context) {
+	   try {
+			hKey.set(((String)value.get(0)).getBytes());
+			kv = new KeyValue(hKey.get(), DATA_COL_FAM,
+			"first_name".getBytes(), ((String)value.get(1)).getBytes());
+			context.write(hKey, kv);
+			kv = new KeyValue(hKey.get(), DATA_COL_FAM,
+			"last_name".getBytes(), ((String)value.get(1)).getBytes());
+			context.write(hKey, kv);
+			kv = new KeyValue(hKey.get(), DATA_COL_FAM,
+			"email".getBytes(), ((String)value.get(1)).getBytes());
+			context.write(hKey, kv);
+			kv = new KeyValue(hKey.get(), DATA_COL_FAM,
+			"city".getBytes(), ((String)value.get(1)).getBytes());
+			context.write(hKey, kv);
+	   } catch(Exception exception) {			
+            exception.printStackTrace();			
+       }
+	  
+	}
+}
+
+/*
+1) prepare the jason file with records as below
+
+{"id="1","first_name"="John","last_name"="Smith","email"="xyz@com","city"="CA"},
+{"id="2","first_name"="William","last_name"="Smith","email"="abc@com","city"="LA"}
+
+2) upload the file to HDFS
+
+3) create an external hive table as
+
+CREATE EXTERNAL TABLE jason_table(
+id string, 
+first_name string,
+last_name string,
+email string,
+city string
+)
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+LOCATION 'point to hdfs path of the jason file';
+*/
