@@ -3,20 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>MapR-M7</groupId>
-    <artifactId>tradeprocessing</artifactId>
+    <artifactId>schemadesignsolution</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-
-	
-    <name>tradeprocessing</name>
+    <name>schemadesignsolution</name>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <encoding>UTF-8</encoding>
         <mapr.version>1.1.1-mapr-1602-m7-5.1.0</mapr.version>
-        <project.basedir>./</project.basedir>
     </properties>  
 
     <dependencies>
@@ -24,12 +21,7 @@
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
             <version>${mapr.version}</version>
-            <!--  <scope>compile</scope> -->
-        </dependency>
-        <dependency>
-        	<groupId>com.maprdemo.multiclusterdb</groupId>
-			<artifactId>multiclusterdb</artifactId>
-			<version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 		
@@ -44,19 +36,7 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-        <repository>
-            <id>repo</id>
-            <releases>
-               <enabled>true</enabled>
-               <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-            <snapshots>
-               <enabled>false</enabled>
-            </snapshots>
-            <url>file://${project.basedir}/repo</url>
-        </repository>
     </repositories>
-
 
     <build>
         <plugins>
@@ -75,31 +55,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.8</version>
-		    </plugin> 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>tradeprocessing.GetTrades</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            </plugin>
         </plugins>
     </build>
 </project>
