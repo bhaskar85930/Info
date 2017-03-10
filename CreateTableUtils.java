@@ -1,4 +1,4 @@
-package tradeprocessing;
+package schemadesign;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class CreateTableUtils {
 	 * @return
 	 * @throws IOException
 	 */
-/*	public static boolean createTable(Configuration conf, String tablePath, byte[][] colFams) throws IOException {
+	public static boolean createTable(Configuration conf, String tablePath, byte[][] colFams) throws IOException {
 		System.out.println("Creating table " + tablePath + "...");
 		HBaseAdmin admin = new HBaseAdmin(conf);
 		byte[] tablePathBytes = Bytes.toBytes(tablePath); 
@@ -59,7 +59,7 @@ public class CreateTableUtils {
             admin.deleteTable(tableName);
         }
     }
-*/	
+	
 	/** 
 	 * reads data from a CSV text file and constructs Trade objects, one per line.
 	 * Each trade is added to a List<Trade>, and the list is returned. 

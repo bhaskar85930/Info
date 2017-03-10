@@ -1,4 +1,4 @@
-package tradeprocessing;
+package schemadesign;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
