@@ -1,0 +1,153 @@
+Example MultiTableHFileOutputFormat Job
+Example.java
+package summarizer.hadoop;
+
+/**
+ * Copyright 2014 AdRoll
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+import static core.hadoop.output.MultiTableHFileOutputFormat.getRow;
+import static core.hadoop.output.MultiTableHFileOutputFormat.getTable;
+import static core.hadoop.output.MultiTableHFileOutputFormat.makeKey;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.KeyValue;
+import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
+
+import summarizer.hbase.schema.AdDeliveriesSchema;
+import summarizer.hbase.schema.AdGroupDeliveriesSchema;
+import summarizer.hbase.schema.BidStrategyDeliveriesSchema;
+import summarizer.hbase.schema.SiteDeliveriesSchema;
+import core.hadoop.hbase.schema.KeySchema;
+import core.hadoop.output.MultiTableHFileOutputFormat;
+
+public class Example extends Configured implements Tool {
+
+  protected static List<KeySchema> deliveries;
+  
+  static {
+    deliveries = new ArrayList<KeySchema>();
+    deliveries.add(new SiteDeliveriesSchema());
+    deliveries.add(new AdDeliveriesSchema());
+    deliveries.add(new AdGroupDeliveriesSchema());
+    deliveries.add(new BidStrategyDeliveriesSchema());
+  }
+  
+  static class ExampleMapper 
+    extends Mapper<Text, Text, ImmutableBytesWritable, KeyValue> {
+
+    protected final ImmutableBytesWritable ibw = new ImmutableBytesWritable();
+    protected final KeyValue kv = new KeyValue();
+    
+    @Override
+    public void map(Text key, Text value, Context context) 
+        throws IOException, InterruptedException {
+      
+      for (KeySchema schema : deliveries) {
+        // The schema can take data and make a row key for it's table
+        String row = schema.getRowKey(key, value);
+        String table = schema.getTable(); 
+        ibw.set(makeKey(table, row));
+        
+        // Magic function
+        kv.set(makeUsefulHBaseData(key, value));
+        context.write(ibw, kv);
+      }
+    }
+  }
+ 
+  static class ExampleReducer 
+    extends Reducer<ImmutableBytesWritable, KeyValue, ImmutableBytesWritable, KeyValue> {
+    
+    @Override
+    public void reduce(ImmutableBytesWritable kw, Iterable<KeyValue> values, Context context) 
+        throws IOException, InterruptedException {
+      
+      List<KeyValue> reducedValues;
+      for (KeyValue kv : values) {
+        // Magic function
+        reducedValues = doAnyNeededReducingWorkHere(values);
+      }
+      
+      // Grab all the values and order them
+      TreeSet<KeyValue> map = new TreeSet<KeyValue>(KeyValue.COMPARATOR);
+      for (KeyValue kv : reducedValues) {
+        map.add(kv);
+      }
+      
+      // Write out the values in order
+      for (KeyValue kv : map) {
+        context.write(kw, kv);
+      }
+    }
+  }
+  
+  @Override
+  public int run(String[] args) throws Exception {
+    Configuration conf = getConf();
+    
+    Job job = Job.getInstance(conf, Example.class.getSimpleName());
+    job.setJarByClass(Example.class);    
+    job.setMapperClass(ExampleMapper.class);
+    job.setMapOutputKeyClass(ImmutableBytesWritable.class);
+    job.setMapOutputValueClass(KeyValue.class);
+    job.setReducerClass(ExampleReducer.class);    
+
+    FileInputFormat.setInputPaths(job, new Path("/some/input/path"));
+    FileOutputFormat.setOutputPath(job, new Path("/some/output/path"));
+    
+    Set<String> tables = new HashSet<String>();
+    // Get all the output tables
+    for (KeySchema schema : deliveries) {
+      tables.add(schema.getTable());
+    }
+
+    // Make HTables for each output table
+    Iterator<String> iter = tables.iterator();
+    HTable[] hTables = new HTable[tables.size()];
+    for (int i = 0; i < tables.size(); i++) {
+      hTables[i] = new HTable(conf, iter.next());
+    }
+    // Configure the load for all the tables
+    MultiTableHFileOutputFormat.configureIncrementalLoad(job, hTables);
+    
+    return job.waitForCompletion(true) ? 0 : 1;
+  }
+
+  public static void main(String[] args) throws Exception {
+    ToolRunner.run(HBaseConfiguration.create(), new Example(), args);
+  }
+}
