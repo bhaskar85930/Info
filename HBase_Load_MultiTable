@@ -1,0 +1,34 @@
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class BulkLoadMapper extends Mapper<LongWritable, Text, ImmutableBytesWritable, Put> {
+	private int counter = 10;
+
+	@Override
+	protected void setup(Context context) throws IOException, InterruptedException {
+		Configuration conf = context.getConfiguration();
+	}
+
+
+	@Override
+	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+		String[] valuePair = value.toString().split(":");
+		String rowKey = String.valueOf(counter++);
+		Put p = new Put(Bytes.toBytes(rowKey));
+		p.addColumn(Bytes.toBytes("cf1"), Bytes.toBytes("first_name"), Bytes.toBytes(valuePair[0]));
+		p.addColumn(Bytes.toBytes("cf1"), Bytes.toBytes("last_name"), Bytes.toBytes(valuePair[1]));
+		if (valuePair[0].startsWith("A")) {
+			context.write(new ImmutableBytesWritable(Bytes.toBytes("TableA")), p);
+		} else {
+			context.write(new ImmutableBytesWritable(Bytes.toBytes("TableB")), p);
+		}
+
+	}
+}
