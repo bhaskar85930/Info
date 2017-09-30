@@ -1,0 +1,61 @@
+import java.io.FileWriter;
+import java.io.IOException;
+//import java.io.File;
+
+public class CreateCsvFile {
+
+	private static void generateCsvFile(String fileName, int numberofrows) {
+
+      FileWriter writer = null;
+
+ try {
+
+			writer = new FileWriter(fileName);
+
+			for (int k = 1; k < numberofrows; k++)
+{
+				// It is used to create a row count/number.
+				// writer.append(k+",");
+				writer.append("americanexpress1aderbuildingthreephoenixarizonaunitedstates");
+     writer.append(',');
+				writer.append("americanexpress2aderbuildingthreephoenixarizonaunitedstates");
+				/*
+				 * writer.append(','); writer.append(
+				 * "americanexpress3aderbuildingthreephoenixarizonaunitedstates"
+				 * ); writer.append(','); writer.append(
+				 * "americanexpress4aderbuildingthreephoenixarizonaunitedstates"
+				 * );
+				 */
+     writer.append('\n');
+
+     }
+
+     System.out.println("CSV file is created...");
+
+  } catch (IOException e) {
+     e.printStackTrace();
+  } finally {
+        try {
+      writer.flush();
+      writer.close();
+        } catch (IOException e) {
+      e.printStackTrace();
+}
+}
+}
+
+public static void main(String[] args) {
+		String filelocation = args[0];
+		int numberofrows = Integer.valueOf(args[1]);
+		generateCsvFile(filelocation, numberofrows);
+		// String location = "C:\\Users/byakkant/newCsvFile.csv";
+		// String location = "newCsvFile.csv";
+		/*
+		 * File fac = new File("C:\\Users/byakkant/newCsvFile.csv"); if
+		 * (!fac.exists()) { generateCsvFile(location); }
+		 */
+		// generateCsvFile(file);
+		// generateCsvFile(file);
+
+}
+}
